@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [reactRefresh()],
   base: '/redlid-website/',
   build: {
-    outDir: 'build',
+    outDir: 'dist',
   },
 })
