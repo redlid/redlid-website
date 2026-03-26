@@ -16,7 +16,10 @@ const Seo = () => {
       <meta property="og:type" content="article" />
       <meta property="og:url" content={url} />
       <meta property="og:description" content={SEO.description} />
-      <meta property="og:image" content={SEO.image} />
+      <meta
+        property="og:image"
+        content={`${import.meta.env.BASE_URL}${SEO.image}`}
+      />
 
       <meta name="twitter:card" content="summary" />
     </Helmet>

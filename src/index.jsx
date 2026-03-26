@@ -1,3 +1,4 @@
+import './setupAssetUrls.js'
 import React from 'react'
 import App from './app.jsx'
 import { HelmetProvider } from 'react-helmet-async'

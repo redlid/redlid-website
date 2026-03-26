@@ -64,7 +64,7 @@ h3,
 }
 
 .navbar-light .navbar-toggler-icon {
-  background-image: url(/assets/iconmonstr-menu-1.svg);
+  background-image: var(--asset-url-iconmonstr-menu-1);
   background-size: 50%;
 }
 
@@ -336,8 +336,7 @@ a:hover .btn {
 }
 
 .Footer {
-  background-image: url(/assets/RedlidTruckGrassFooter.jpg),
-    url(/assets/RedlidGrass.jpg);
+  background-image: var(--asset-url-footer-truck), var(--asset-url-redlid-grass);
   background-repeat: no-repeat, repeat-x;
   background-position: bottom 0 right 0;
   background-size: auto 200px, auto 200px;
@@ -348,8 +347,7 @@ a:hover .btn {
 }
 
 .Footer.BinsBags {
-  background-image: url(/assets/BinBagTruckGrassFooter.png),
-    url(/assets/RedlidGrass.jpg);
+  background-image: var(--asset-url-footer-binbag), var(--asset-url-redlid-grass);
 }
 
 .FooterContents {

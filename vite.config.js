@@ -5,7 +5,4 @@ import reactRefresh from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [reactRefresh()],
   base: '/redlid-website/',
-  build: {
-    outDir: 'dist',
-  },
 })

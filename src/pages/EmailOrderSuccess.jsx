@@ -13,7 +13,7 @@ export default function EmailOrderSuccess() {
       </Container>
       <Container id="pdp">
         <Row className="pdptop">
-          <Image src="/assets/RedlidBinBag.jpg" />
+          <Image src={`${import.meta.env.BASE_URL}assets/RedlidBinBag.jpg`} />
         </Row>
         <Row>
           <i className="pdpHelptext">
