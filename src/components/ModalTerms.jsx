@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { Link } from 'wouter'
 
-export default ({ show, onHide }) => {
+export default ({ show, onHide, onShowPrivacy }) => {
   return (
     <Modal show={show} onHide={onHide} size="lg">
       <Modal.Header closeButton>
@@ -204,9 +204,23 @@ export default ({ show, onHide }) => {
         <h3>13.    Privacy</h3>
         <p>
           We comply with the Privacy Act 2020. See our{' '}
-          <Link href="/privacy" className="TermsModalBtn" onClick={onHide}>
-            Privacy Policy
-          </Link>
+          {onShowPrivacy ? (
+            <Button
+              variant="link"
+              className="TermsModalBtn"
+              onClick={(event) => {
+                event.preventDefault()
+                event.stopPropagation()
+                onShowPrivacy()
+              }}
+            >
+              Privacy Policy
+            </Button>
+          ) : (
+            <Link href="/privacy" className="TermsModalBtn" onClick={onHide}>
+              Privacy Policy
+            </Link>
+          )}
         </p>
         <h3>14. Recovering Collection Costs</h3>
         <p>

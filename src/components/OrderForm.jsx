@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import Button from 'react-bootstrap/Button'
 import ModalTerms from './ModalTerms'
+import ModalPrivacy from './ModalPrivacy'
 
 const CYCLES = {
   Weekly: 'Weekly',
@@ -94,6 +95,7 @@ export default function OrderForm({ bin = false, bag = false }) {
     throw new Error('You must specify a bin or bag')
   }
   const [showTerms, setShowTerms] = useState(false)
+  const [showPrivacy, setShowPrivacy] = useState(false)
   const Cycles = bin ? BinsCycles : BagsCycles
   const type = bin ? 'Bin' : 'Bag'
   return (
@@ -263,7 +265,15 @@ export default function OrderForm({ bin = false, bag = false }) {
           </button>
         </div>
       </Form>
-      <ModalTerms show={showTerms} onHide={() => setShowTerms(false)} />
+      <ModalTerms
+        show={showTerms}
+        onHide={() => setShowTerms(false)}
+        onShowPrivacy={() => {
+          setShowTerms(false)
+          setShowPrivacy(true)
+        }}
+      />
+      <ModalPrivacy show={showPrivacy} onHide={() => setShowPrivacy(false)} />
     </>
   )
 }
