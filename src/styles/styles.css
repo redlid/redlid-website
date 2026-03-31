@@ -278,7 +278,7 @@ a:hover .btn {
 
 .TermsModalBtn {
   cursor: pointer;
-  padding-top: 0px;
+  padding: 0 0 5px 0;
   text-transform: uppercase;
   font-weight: 900;
   color: #000;
@@ -320,6 +320,19 @@ a:hover .btn {
 #Footer a {
   text-decoration: none;
   text-transform: uppercase;
+}
+
+#Footer .FooterTermsBtn {
+  padding: 0;
+  border: 0;
+  color: #e31b23;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+#Footer .FooterTermsBtn:hover {
+  color: #000;
 }
 
 .content {

@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
+import { Link } from 'wouter'
 
 export default ({ show, onHide }) => {
   return (
@@ -202,16 +203,10 @@ export default ({ show, onHide }) => {
         </p>
         <h3>13.    Privacy</h3>
         <p>
-          You authorise us to collect, keep and use personal information you
-          provide to us to process payment for our services, or for any other
-          purpose that you authorise. We comply with the Privacy Act 1993, and
-          you have the right to access and correct any personal information we
-          hold about you (there may be a reasonable charge for this).
-        </p>
-        <p>
-          * In these Terms, "us" &ldquo;our&rdquo; or "we" means Red Lid Garden
-          Bins &amp; Bags Ltd (the owner of this website), and &ldquo;you&rdquo;
-          means our customer, who purchases services from us on this website.
+          We comply with the Privacy Act 2020. See our{' '}
+          <Link href="/privacy" className="TermsModalBtn" onClick={onHide}>
+            Privacy Policy
+          </Link>
         </p>
         <h3>14. Recovering Collection Costs</h3>
         <p>

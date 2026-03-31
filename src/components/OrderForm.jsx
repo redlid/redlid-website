@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
+import Button from 'react-bootstrap/Button'
+import ModalTerms from './ModalTerms'
 
 const CYCLES = {
   Weekly: 'Weekly',
@@ -91,6 +93,7 @@ export default function OrderForm({ bin = false, bag = false }) {
   if ((!bin && !bag) || (bin && bag)) {
     throw new Error('You must specify a bin or bag')
   }
+  const [showTerms, setShowTerms] = useState(false)
   const Cycles = bin ? BinsCycles : BagsCycles
   const type = bin ? 'Bin' : 'Bag'
   return (
@@ -228,7 +231,22 @@ export default function OrderForm({ bin = false, bag = false }) {
           id="Terms"
           name="Terms"
           type="checkbox"
-          label="I have read and agree to the Terms & Conditions"
+          label={
+            <>
+              I have read and agree to the{' '}
+              <Button
+                onClick={(event) => {
+                  event.preventDefault()
+                  event.stopPropagation()
+                  setShowTerms(true)
+                }}
+                className="TermsModalBtn"
+                variant="link"
+              >
+                Terms & Conditions
+              </Button>
+            </>
+          }
           className="TermsCheckbox"
           value="Agreed to terms and conditions"
           required
@@ -239,10 +257,13 @@ export default function OrderForm({ bin = false, bag = false }) {
           type="hidden"
           value="v1"
         />
-        <button type="submit" className="btn btn-primary" id="submitBtn">
-          Submit order
-        </button>
+        <div className="mt-3">
+          <button type="submit" className="btn btn-primary" id="submitBtn">
+            Submit order
+          </button>
+        </div>
       </Form>
+      <ModalTerms show={showTerms} onHide={() => setShowTerms(false)} />
     </>
   )
 }
