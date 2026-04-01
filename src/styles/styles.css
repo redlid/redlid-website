@@ -325,14 +325,21 @@ a:hover .btn {
 #Footer .FooterTermsBtn {
   padding: 0;
   border: 0;
-  color: #e31b23;
-  font-weight: 900;
-  text-decoration: none;
-  text-transform: uppercase;
+  color: #000;
+  font-weight: 400;
+  text-decoration: underline;
+  text-transform: none;
 }
 
 #Footer .FooterTermsBtn:hover {
   color: #000;
+}
+
+.FooterPolicyLinks {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin-top: 4px;
 }
 
 .content {

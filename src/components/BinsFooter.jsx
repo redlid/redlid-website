@@ -52,24 +52,16 @@ export default () => (
                     </a>
                   </td>
                 </tr>
-                <tr>
-                  <td>Terms</td>
-                  <td>
-                    <Link href="/terms" className="FooterTermsBtn">
-                      Terms & Conditions
-                    </Link>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Privacy</td>
-                  <td>
-                    <Link href="/privacy" className="FooterTermsBtn">
-                      Privacy Policy
-                    </Link>
-                  </td>
-                </tr>
               </tbody>
             </table>
+            <div className="FooterPolicyLinks">
+              <Link href="/terms" className="FooterTermsBtn">
+                Terms & Conditions
+              </Link>
+              <Link href="/privacy" className="FooterTermsBtn">
+                Privacy Policy
+              </Link>
+            </div>
           </Col>
         </Row>
       </Container>
