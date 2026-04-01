@@ -2,6 +2,7 @@ import * as React from 'react'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+import { Link } from 'wouter'
 
 export default () => (
   <Container fluid className="Footer BinsBags" id="Footer">
@@ -53,6 +54,14 @@ export default () => (
                 </tr>
               </tbody>
             </table>
+            <div className="FooterPolicyLinks">
+              <Link href="/terms" className="FooterTermsBtn">
+                Terms & Conditions
+              </Link>
+              <Link href="/privacy" className="FooterTermsBtn">
+                Privacy Policy
+              </Link>
+            </div>
           </Col>
         </Row>
       </Container>
