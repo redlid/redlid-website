@@ -23,7 +23,7 @@ export default () => (
           </Col>
           <Col md={6}>
             <p className="officehours">
-              Office hours are 8am - 5pm Monday to Thursday, 8am-3pm Fridays
+              Office hours are 8am - 4pm Monday to Friday
             </p>
             <table>
               <tbody>
