@@ -1,6 +1,7 @@
 name: Scheduled Deploy to S3
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 19 * * *'  # 8am NZST (UTC+12)
 
