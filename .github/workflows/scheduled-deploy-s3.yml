@@ -35,9 +35,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ vars.PR_NUMBER_FOR__AUTO_DEPLOYMENT }}
 
-      - name: Checkout
+      - name: Checkout latest master
         if: steps.date_check.outputs.should_deploy == 'true'
         uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Confirm deployed commit
+        if: steps.date_check.outputs.should_deploy == 'true'
+        run: |
+          git log -1 --oneline
+          git status
 
       - name: Set up Node
         if: steps.date_check.outputs.should_deploy == 'true'
