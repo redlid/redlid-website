@@ -140,7 +140,7 @@ export default function Manage() {
           </p>
 
           <p class="officehours">
-            Office hours are 8am - 4pm Monday to Friday
+            Office hours are 8am - 4pm Monday to Friday.
           </p>
 
           <p>
