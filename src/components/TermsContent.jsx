@@ -89,7 +89,7 @@ export default function TermsContent({ privacyLink }) {
         this advance payment goes onto your account as a credit and your
         collection charges are deducted from it, once you have used your $60 you
         are welcome to either pay another bulk payment or just pay one
-        collection in advance ( your account must always stay in credit)
+        collection in advance ( your account must always stay in credit).
         Payments can be made by credit card, internet banking or automatic
         payment.
       </p>
@@ -166,7 +166,7 @@ export default function TermsContent({ privacyLink }) {
         the scheduled date for extra collections in your area when you contact
         us.
       </p>
-      <h3>11. Bin &amp; Bag Placement</h3>
+      <h3>11. Bag Placement</h3>
       <p>
         Please ensure the Garden Waste Bag is NOT placed in a difficult position
         such as steep driveways, narrow access ways and steps that may impede
