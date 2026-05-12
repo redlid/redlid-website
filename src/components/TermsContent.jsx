@@ -36,13 +36,13 @@ export default function TermsContent({ privacyLink }) {
         <b>8 Weekly collection cycle</b> no missed or delayed collections without
         charge
         <br />
-        <b>4 Weekly collection cycle</b> 1 missed or delayed collections per
+        <b>4 Weekly collection cycle</b> 1 missed or delayed collection per
         calendar year without charge
         <br />
         <b>2 Weekly collection cycle</b> 2 missed or delayed collections per
         calendar year without charge
         <br />
-        <b>1 Weekly collection cycle</b> 4 missed collection per calendar year
+        <b>1 Weekly collection cycle</b> 4 missed collections per calendar year
         without charge
       </p>
       <p>
