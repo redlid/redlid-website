@@ -63,6 +63,8 @@ jobs:
       - name: Build
         if: steps.date_check.outputs.should_deploy == 'true'
         run: npm run build
+        env:
+          VITE_ORDER_FORM_ACTION: https://api.redlid.co.nz/public/orders
 
       - name: Configure AWS credentials
         if: steps.date_check.outputs.should_deploy == 'true'
