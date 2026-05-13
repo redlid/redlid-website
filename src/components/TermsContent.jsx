@@ -12,7 +12,7 @@ export default function TermsContent({ privacyLink }) {
       <h3>1. Making orders</h3>
       <p>
         When you place an order with us, you agree to use our services on a
-        regular, ongoing basis until you cancel in accordance with clause 6. You
+        regular, ongoing basis until you cancel in accordance with clause 7. You
         will need an email address that you check regularly, as this is the
         preferred option for communication.
       </p>
