@@ -135,7 +135,7 @@ export default function TermsContent({ privacyLink }) {
         </li>
         <li>
           Ensure your Garden Waste Bin or Bag contains approved organic waste
-          as outlined in clause 9 below.
+          as outlined in clause 10 below.
         </li>
       </ol>
       <p>Please do NOT:</p>
