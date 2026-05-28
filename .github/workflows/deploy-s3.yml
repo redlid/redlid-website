@@ -33,6 +33,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_ORDER_FORM_ACTION: ${{ github.event.inputs.environment == 'prod' && 'https://api.redlid.co.nz/public/orders' || 'https://dev.api.redlid.co.nz/public/orders' }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

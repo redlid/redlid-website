@@ -13,6 +13,9 @@ const CYCLES = {
   OneOff: 'One Off',
 }
 
+const ORDER_FORM_ACTION =
+  import.meta.env.VITE_ORDER_FORM_ACTION || 'http://localhost:8080/public/orders'
+
 const BagsCycles = () => (
   <>
     <Form.Check
@@ -101,9 +104,9 @@ export default function OrderForm({ bin = false, bag = false }) {
   return (
     <>
       <Form
-        action="https://redlid-orders.herokuapp.com/submitOrder/"
+        action={ORDER_FORM_ACTION}
         method="post"
-        encType="json"
+        encType="application/x-www-form-urlencoded"
       >
         <input name="Order Type" id="orderType" type="hidden" value={type} />
 
