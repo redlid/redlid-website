@@ -85,13 +85,12 @@ export default function TermsContent({ privacyLink }) {
       </p>
       <h3>6. Payment</h3>
       <p>
-        A $60 advance payment is required before the bin or bag is delivered,
-        this advance payment goes onto your account as a credit and your
-        collection charges are deducted from it, once you have used your $60 you
-        are welcome to either pay another bulk payment or just pay one
-        collection in advance ( your account must always stay in credit).
-        Payments can be made by credit card, internet banking or automatic
-        payment.
+        A $60 payment is required after the bin or bag has been delivered, this
+        payment goes onto your account as a credit and your collection charges
+        are deducted from it, once you have used your $60 you are welcome to
+        either pay another bulk payment or just pay one collection in advance
+        (your account must always stay in credit). Payments can be made by
+        credit card, internet banking or automatic payment.
       </p>
       <h3>7. Cancelling your service</h3>
       <p>
