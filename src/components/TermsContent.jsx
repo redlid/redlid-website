@@ -89,7 +89,7 @@ export default function TermsContent({ privacyLink }) {
         payment goes onto your account as a credit and your collection charges
         are deducted from it, once you have used your $60 you are welcome to
         either pay another bulk payment or just pay one collection in advance
-        ( your account must always stay in credit). Payments can be made by
+        (your account must always stay in credit). Payments can be made by
         credit card, internet banking or automatic payment.
       </p>
       <h3>7. Cancelling your service</h3>
