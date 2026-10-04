@@ -22,7 +22,7 @@ const BagsCycles = () => (
       id="pickupCycle1"
       name="Pickup Cycle"
       type="radio"
-      label="Weekly (Hamilton only) - $20 per collection"
+      label="Weekly (Hamilton only) - $21 per collection"
       value={CYCLES.Weekly}
       required
     />
@@ -31,21 +31,21 @@ const BagsCycles = () => (
       id="pickupCycle2"
       name="Pickup Cycle"
       type="radio"
-      label="2-Weekly - $24 per collection"
+      label="2-Weekly - $25 per collection"
       value={CYCLES.TwoWeekly}
     />
     <Form.Check
       id="pickupCycle3"
       name="Pickup Cycle"
       type="radio"
-      label="4-Weekly - $28 per collection"
+      label="4-Weekly - $29 per collection"
       value={CYCLES.FourWeekly}
     />
     <Form.Check
       id="pickupCycle4"
       name="Pickup Cycle"
       type="radio"
-      label="One-off (Collection within 4 weeks of dropoff) - $45"
+      label="One-off (Collection within 4 weeks of dropoff) - $50"
       value={CYCLES.OneOff}
     />
   </>
@@ -56,7 +56,7 @@ const BinsCycles = () => (
     <Form.Check
       id="pickupCycle1"
       name="Pickup Cycle"
-      label="Weekly (Hamilton only) - $8.50 per collection"
+      label="Weekly (Hamilton only) - $9 per collection"
       type="radio"
       value={CYCLES.Weekly}
       required
@@ -66,28 +66,28 @@ const BinsCycles = () => (
       id="pickupCycle2"
       name="Pickup Cycle"
       type="radio"
-      label="2-Weekly - $12 per collection"
+      label="2-Weekly - $13 per collection"
       value={CYCLES.TwoWeekly}
     />
     <Form.Check
       id="pickupCycle3"
       name="Pickup Cycle"
       type="radio"
-      label="4-Weekly - $18 per collection"
+      label="4-Weekly - $19 per collection"
       value={CYCLES.FourWeekly}
     />
     <Form.Check
       id="pickupCycle4"
       name="Pickup Cycle"
       type="radio"
-      label="8-Weekly - $25 per collection"
+      label="8-Weekly - $26 per collection"
       value={CYCLES.EightWeekly}
     />
     <Form.Check
       id="pickupCycle5"
       name="Pickup Cycle"
       type="radio"
-      label="One-off (I have my own bin) - $28"
+      label="One-off (I have my own bin) - $32"
       value={CYCLES.OneOff}
     />
   </>
