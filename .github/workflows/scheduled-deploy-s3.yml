@@ -1,105 +1,116 @@
 name: Scheduled Deploy to S3
 
+# Triggered at the scheduled time by the redlid-prod-website-auto-deployment Lambda
+# (EventBridge Scheduler), or manually from the Actions tab.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 19 * * *'  # 8am NZST (UTC+12)
 
 concurrency:
-  group: deploy-${{ github.event.inputs.environment }}
-  cancel-in-progress: true
+  group: deploy-prod
+  cancel-in-progress: false
 
 permissions:
   contents: write
   pull-requests: write
 
+env:
+  BUCKET_NAME: redlid.co.nz
+  PR_NUMBER: ${{ vars.PR_NUMBER_FOR__AUTO_DEPLOYMENT }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check deployment date
-        id: date_check
+      - name: Validate configuration
         run: |
-          TODAY_NZ=$(TZ=Pacific/Auckland date +%d%m%Y)
-          if [ "$TODAY_NZ" != "${{ vars.NEXT_AUTO_DEPLOYMENT_DATE_DDMMYYY }}" ]; then
-            echo "Today ($TODAY_NZ) does not match deployment date (${{ vars.NEXT_AUTO_DEPLOYMENT_DATE_DDMMYYY }}). Skipping deployment."
-            echo "should_deploy=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "Deployment date matched ($TODAY_NZ). Continuing..."
-            echo "should_deploy=true" >> "$GITHUB_OUTPUT"
+          if [ -z "$PR_NUMBER" ]; then
+            echo "::error::Repository variable PR_NUMBER_FOR__AUTO_DEPLOYMENT is not set."
+            exit 1
           fi
+          echo "Triggered by: ${{ github.event_name }} (actor: ${{ github.actor }})"
+          echo "PR to merge: #$PR_NUMBER"
 
       - name: Merge PR
-        if: steps.date_check.outputs.should_deploy == 'true'
-        run: gh pr merge $PR_NUMBER --repo redlid/redlid-website --squash --delete-branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ vars.PR_NUMBER_FOR__AUTO_DEPLOYMENT }}
+        run: |
+          STATE=$(gh pr view "$PR_NUMBER" --repo "${{ github.repository }}" --json state -q .state)
+          case "$STATE" in
+            MERGED)
+              echo "PR #$PR_NUMBER is already merged; continuing with deployment." ;;
+            OPEN)
+              gh pr merge "$PR_NUMBER" --repo "${{ github.repository }}" --squash --delete-branch ;;
+            *)
+              echo "::error::PR #$PR_NUMBER is $STATE; refusing to deploy."
+              exit 1 ;;
+          esac
 
       - name: Checkout latest master
-        if: steps.date_check.outputs.should_deploy == 'true'
         uses: actions/checkout@v4
         with:
           ref: master
           fetch-depth: 0
 
       - name: Confirm deployed commit
-        if: steps.date_check.outputs.should_deploy == 'true'
         run: |
           git log -1 --oneline
           git status
 
       - name: Set up Node
-        if: steps.date_check.outputs.should_deploy == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
 
       - name: Install dependencies
-        if: steps.date_check.outputs.should_deploy == 'true'
         run: npm ci
 
       - name: Build
-        if: steps.date_check.outputs.should_deploy == 'true'
         run: npm run build
         env:
           VITE_ORDER_FORM_ACTION: https://api.redlid.co.nz/public/orders
 
       - name: Configure AWS credentials
-        if: steps.date_check.outputs.should_deploy == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ap-southeast-6
 
-      - name: Set bucket name
-        if: steps.date_check.outputs.should_deploy == 'true'
-        id: bucket
-        run: echo "name=redlid.co.nz" >> "$GITHUB_OUTPUT"
-
       - name: Deploy to S3
-        if: steps.date_check.outputs.should_deploy == 'true'
-        run: aws s3 sync ./dist s3://${{ steps.bucket.outputs.name }} --delete
+        run: aws s3 sync ./dist "s3://$BUCKET_NAME" --delete
 
       - name: Invalidate CloudFront cache
-        if: steps.date_check.outputs.should_deploy == 'true'
         run: |
           DISTRIBUTION_ID=$(aws cloudfront list-distributions \
-            --query "DistributionList.Items[?Aliases.Items[?@=='${{ steps.bucket.outputs.name }}']].Id" \
+            --query "DistributionList.Items[?Aliases.Items[?@=='$BUCKET_NAME']].Id" \
             --output text)
-          if [ -n "$DISTRIBUTION_ID" ]; then
+          if [ -n "$DISTRIBUTION_ID" ] && [ "$DISTRIBUTION_ID" != "None" ]; then
             aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths "/*"
+          else
+            echo "::warning::No CloudFront distribution found for $BUCKET_NAME"
           fi
 
-      - name: Notify Slack
-        if: steps.date_check.outputs.should_deploy == 'true'
+      - name: Notify Slack (success)
+        if: success()
         env:
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          TEXT: "The auto deployment is completed for ${{ env.BUCKET_NAME }} (PR #${{ env.PR_NUMBER }})."
         run: |
-          curl -X POST \
-            -H "Authorization: Bearer $SLACK_TOKEN" \
-            -H "Content-type: application/json; charset=utf-8" \
-            --data '{"channel":"#redlid","text":"The auto deployment is completed for ${{ steps.bucket.outputs.name }}."}' \
-            https://slack.com/api/chat.postMessage
+          jq -n --arg text "$TEXT" '{channel: "#redlid", text: $text}' |
+            curl -sS -X POST \
+              -H "Authorization: Bearer $SLACK_TOKEN" \
+              -H "Content-type: application/json; charset=utf-8" \
+              --data @- https://slack.com/api/chat.postMessage | jq -e '.ok' > /dev/null
+
+      - name: Notify Slack (failure)
+        if: failure()
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          TEXT: "The auto deployment FAILED for ${{ env.BUCKET_NAME }} (PR #${{ env.PR_NUMBER }}): ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        run: |
+          jq -n --arg text "$TEXT" '{channel: "#redlid", text: $text}' |
+            curl -sS -X POST \
+              -H "Authorization: Bearer $SLACK_TOKEN" \
+              -H "Content-type: application/json; charset=utf-8" \
+              --data @- https://slack.com/api/chat.postMessage
