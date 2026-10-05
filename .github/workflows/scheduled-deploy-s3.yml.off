@@ -3,7 +3,7 @@ name: Scheduled Deploy to S3
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 19 * * *'  # 8am NZST (UTC+12)
+    - cron: '0 3 * * *' # 4pm NZDT (UTC+13)
 
 concurrency:
   group: deploy-${{ github.event.inputs.environment }}
@@ -14,7 +14,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  deploy:
+  deploy
     runs-on: ubuntu-latest
     steps:
       - name: Check deployment date
